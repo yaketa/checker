@@ -20,6 +20,17 @@ export default function TestWindow() {
     setEndDate('');
   };
 
+  const getResultText = () => {
+    switch (markerState) {
+      case 'both':
+        return '陽性';
+      case 'right':
+        return '陰性';
+      default:
+        return '-';
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-8 space-y-8">
       {/* Main Test Window Card */}
@@ -29,7 +40,7 @@ export default function TestWindow() {
         </h1>
 
         {/* Test Window */}
-        <div className="w-[120px] h-[40px] bg-gradient-to-b from-gray-50 to-white rounded-md border border-gray-300 relative shadow-inner mx-auto">
+        <div className="w-[120px] h-[40px] bg-gradient-to-b from-gray-50 to-white rounded-md border border-gray-300 relative shadow-inner mx-auto mb-6">
           {/* Control Marker (Right) */}
           {(markerState === 'right' || markerState === 'both') && (
             <div 
@@ -44,6 +55,19 @@ export default function TestWindow() {
               style={{ left: '33.33%', transform: 'translateX(-50%)' }}
             />
           )}
+        </div>
+
+        {/* Result Display - Fixed Width Container */}
+        <div className="w-full h-[40px] flex items-center justify-center">
+          <div className="w-[200px] text-center">
+            <p className={`text-xl font-semibold whitespace-nowrap ${
+              markerState === 'both' ? 'text-red-600' : 
+              markerState === 'right' ? 'text-green-600' : 
+              'text-gray-500'
+            }`}>
+              判定結果：<span className="inline-block min-w-[2em]">{getResultText()}</span>
+            </p>
+          </div>
         </div>
       </div>
 
